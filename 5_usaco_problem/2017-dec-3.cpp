@@ -3,6 +3,8 @@
 #include <queue>
 #include <fstream>
 
+//!!!!!!!!! change "Change" to Entry
+
 struct Change {
 	int day;
 	std::string cow_name;
@@ -21,7 +23,15 @@ std::priority_queue<Change> parse_file(){
         int num_entries;
         fint >> num_entries;
 
-	std::cout << std::to_string(num_entries) << std::endl;
+	for (int x = 0; x < num_entries; x++){
+		Change change;
+
+		fint >> change.day;
+		fint >> change.cow_name;
+		fint >> change.change_in_gallons;
+
+		entries.push(change);
+	}
 
 	return entries;
 }
@@ -59,6 +69,6 @@ int get_solution(std::priority_queue<Change> changes){
 }
 
 int main() {
-	parse_file();
+	write_file(get_solution(parse_file()));
 	return 0;
 }
