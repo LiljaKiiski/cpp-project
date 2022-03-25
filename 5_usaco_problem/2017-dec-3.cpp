@@ -1,9 +1,8 @@
-#include <iostream>
+#include <string>
 #include <map>
 #include <queue>
-#include <fstream>
 #include <vector>
-#include <algorithm>
+#include <fstream>
 
 /* USACO 2017 December Contest, Bronze
  * Problem 3. Milk Measurement
