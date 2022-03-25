@@ -2,35 +2,33 @@
 #include <map>
 #include <queue>
 #include <fstream>
+#include <vector>
+#include <algorithm>
 
-//!!!!!!!!! change "Change" to Entry
-
-struct Change {
+struct Entry {
 	int day;
 	std::string cow_name;
 	int change_in_gallons;
 };
 
-//This is flipped - since we want our queue ordering from smallest to largest
-bool operator<(const Change& a, const Change& b){
+bool operator<(const Entry& a, const Entry& b){ //Flipped since queue is ordered from smallest day to largest
 	return !(a.day < b.day);
 }
 
-std::priority_queue<Change> parse_file(){
-	std::ifstream fint("measurement.in"); //read file
-	std::priority_queue<Change> entries;
+std::priority_queue<Entry> parse_file(){
+	std::ifstream fint("measurement.in");
+	std::priority_queue<Entry> entries;
 
         int num_entries;
         fint >> num_entries;
 
-	for (int x = 0; x < num_entries; x++){
-		Change change;
+	for (int x = 0; x < num_entries; x++){ //Collect all entries
+		Entry entry;
 
-		fint >> change.day;
-		fint >> change.cow_name;
-		fint >> change.change_in_gallons;
-
-		entries.push(change);
+		fint >> entry.day;
+		fint >> entry.cow_name;
+		fint >> entry.change_in_gallons;
+		entries.push(entry);
 	}
 
 	return entries;
@@ -41,30 +39,52 @@ void write_file(int num_changes){
 	fout << num_changes;
 }
 
-int get_solution(std::priority_queue<Change> changes){
-	std::string current_cow = "blank"; //Current cow in display
+std::vector<std::string> highest_cows(std::map<std::string, int> cows){
+	std::map<std::string, int>::iterator it; //Iterate through cow map
+	std::vector<std::string> highest_cows; //Cows with highest gallon production rate
+	int highest = 0;
+
+	for (it = cows.begin(); it != cows.end(); it++) {
+		if (cows[it->first] > highest){
+			highest = cows[it->first]; //Highest is updated
+			highest_cows.clear();
+			highest_cows.push_back(it->first);
+
+		} else if (cows[it->first] == highest){
+			highest_cows.push_back(it->first);
+		}
+	}
+	return highest_cows;
+}
+
+int get_solution(std::priority_queue<Entry> entries){
 	int num_changes = 0; //Number of changes in display
+	std::vector<std::string> display;
+	std::vector<std::string> old_display;
 
 	std::map<std::string, int> cows; //Map of cows to gallons
-	cows["bessie"] = 7;
-	cows["else"] = 7;
-	cows["mildred"] = 7;
+	cows["Bessie"] = 7;
+	cows["Elsie"] = 7;
+	cows["Mildred"] = 7;
 
-	while(!changes.empty()){ //Loop through queue in order of days
-		Change cow = changes.top(); //Newest cow
+	while(!entries.empty()){ //Loop through queue in order of days
+		Entry entry = entries.top(); //Newest cow
+		
+		old_display = highest_cows(cows);
 
-		cows[cow.cow_name]+=cow.change_in_gallons; //Add gallons to corresponding cow
+		cows[entry.cow_name]+=entry.change_in_gallons; //Add gallons to corresponding cow
 
-		//If cow is NOT current cow and cow's gallons are greater than current cow
-		if (cow.cow_name != current_cow && cows[cow.cow_name] >= cows[current_cow]){
-			current_cow = cows[cow.cow_name];
+		display = highest_cows(cows);
+
+		//Display has been changed
+		if (old_display != display){
 			num_changes++;
 		}
 
-		//One other possibility is that if cow's gallons go down, now a different cow is in the lad. Check for this!
-
-		changes.pop();
+		//If cow is current cow and drops down, so that another cow takes place...
+		entries.pop();
 	}
+
 	return num_changes;
 }
 
