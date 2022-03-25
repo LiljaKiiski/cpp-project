@@ -5,16 +5,27 @@
 #include <vector>
 #include <algorithm>
 
+/* USACO 2017 December Contest, Bronze
+ * Problem 3. Milk Measurement
+ *
+ * Solution explanation
+ * 1. Parse file, return queue ordered from smallest to largest days
+ * 2. Loop through queue, update display using get_highest_cows() method
+ * 3. If new display is not the same as old display, increase num_changes
+ * 4. Write num_changes to file
+ */
+
 struct Entry {
 	int day;
 	std::string cow_name;
 	int change_in_gallons;
 };
 
-bool operator<(const Entry& a, const Entry& b){ //Flipped since queue is ordered from smallest day to largest
+bool operator<(const Entry& a, const Entry& b){
 	return !(a.day < b.day);
 }
 
+//Parse file and return queue of cow entries in order from smallest to largest day
 std::priority_queue<Entry> parse_file(){
 	std::ifstream fint("measurement.in");
 	std::priority_queue<Entry> entries;
@@ -34,14 +45,16 @@ std::priority_queue<Entry> parse_file(){
 	return entries;
 }
 
+//Write answer to file
 void write_file(int num_changes){
 	std::ofstream fout("measurement.out");
 	fout << num_changes;
 }
 
-std::vector<std::string> highest_cows(std::map<std::string, int> cows){
+//Return vector of cows with highest milk production rate
+std::vector<std::string> get_highest_cows(std::map<std::string, int> cows){
 	std::map<std::string, int>::iterator it; //Iterate through cow map
-	std::vector<std::string> highest_cows; //Cows with highest gallon production rate
+	std::vector<std::string> highest_cows;
 	int highest = 0;
 
 	for (it = cows.begin(); it != cows.end(); it++) {
@@ -57,10 +70,10 @@ std::vector<std::string> highest_cows(std::map<std::string, int> cows){
 	return highest_cows;
 }
 
+//Return number of changes to display
 int get_solution(std::priority_queue<Entry> entries){
 	int num_changes = 0; //Number of changes in display
 	std::vector<std::string> display;
-	std::vector<std::string> old_display;
 
 	std::map<std::string, int> cows; //Map of cows to gallons
 	cows["Bessie"] = 7;
@@ -68,21 +81,17 @@ int get_solution(std::priority_queue<Entry> entries){
 	cows["Mildred"] = 7;
 
 	while(!entries.empty()){ //Loop through queue in order of days
-		Entry entry = entries.top(); //Newest cow
-		
-		old_display = highest_cows(cows);
 
+		Entry entry = entries.top(); //Newest cow entry
+		std::vector<std::string> old_display = get_highest_cows(cows); //Old display (before updating)
 		cows[entry.cow_name]+=entry.change_in_gallons; //Add gallons to corresponding cow
-
-		display = highest_cows(cows);
+		display = get_highest_cows(cows); //Latest display
 
 		//Display has been changed
 		if (old_display != display){
 			num_changes++;
 		}
-
-		//If cow is current cow and drops down, so that another cow takes place...
-		entries.pop();
+		entries.pop(); 
 	}
 
 	return num_changes;
