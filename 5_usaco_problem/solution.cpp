@@ -94,7 +94,6 @@ int get_solution(priority_queue<Entry> entries){
 		}
 		entries.pop(); 
 	}
-
 	return num_changes;
 }
 
