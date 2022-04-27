@@ -2,14 +2,15 @@
 
 using namespace std;
 
-bool number_is_odd(int num){
-        if (num&1){ //Last digit is 1, so odd
-                return true;
-        }
-
-        return false;
+bool is_power_of_2(int num){
+        
 }
 
 int main(){
+	for (int x = 0; x < 10; x++){
+		string _is_power = is_power_of_2(x) ? "true" : "false";
+		cout << x << " is a power of 2: " << _is_power << endl;
+	}
+
 	return 0;
 }

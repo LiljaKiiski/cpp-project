@@ -12,8 +12,8 @@ bool is_odd(int num){
 
 int main(){
 	for (int x = 0; x < 10; x++){
-		string _is_odd = is_odd(x) ? "true" : "false";
-		cout << x << " is odd: " << _is_odd << endl;
+		string is_odd = is_odd(x) ? "true" : "false";
+		cout << x << " is odd: " << is_odd << endl;
 	}
 
 	return 0;
