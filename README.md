@@ -1,2 +1,3 @@
 # C++ Projects
-Projects for C++ Club 2021-2022
+*** 2021-2022 Year Finished ***
+Projects for C++ Club
