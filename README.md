@@ -1,1 +1,3 @@
-# C++ Projects
+# cpp-projects
+
+Simple C++ projects
