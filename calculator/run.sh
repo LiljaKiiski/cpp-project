@@ -1,4 +1,4 @@
 #!/bin/sh
 
-g++ Main.cpp
+g++ main.cpp
 ./a.out
