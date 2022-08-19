@@ -4,13 +4,14 @@
 double getX1();
 double getX2();
 
-double a;
-double b;
-double c;
+double a = -5;
+double b = -3;
+double c = -1;
 
 using namespace std;
 
 int main(){
+	/*
 	cout << "a: ";
 	cin >> a;
 
@@ -19,11 +20,10 @@ int main(){
 
 	cout << "c: ";
 	cin >> c;
+	*/
 
 	cout << "The equation is: ";
 	cout << a << "x² + " << b << "x + " << c << endl; 
-
-	cout << a + b + c << endl;
 
 	cout << "X is either " << getX1() << " or "<< getX2() << endl;
 
@@ -32,7 +32,9 @@ int main(){
 
 double getX1(){
 	//Step one - simplify root
-	double root = sqrt( pow(b, 2) - 4 * a * c );
+	double root = sqrt( b*b - 4 * a * c );
+
+	return NULL;
 
 	//Step 2 a) - Solve with + 
 	return (-b + root) / (2 * a);
@@ -40,7 +42,7 @@ double getX1(){
 
 double getX2(){
         //Step one - simplify root
-        double root = sqrt( pow(b, 2) - 4 * a * c );
+        double root = sqrt( b*b - 4 * a * c );
 
         //Step 2 a) - Solve with -
         return (-b - root) / (2 * a);
