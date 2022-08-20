@@ -1,9 +1,9 @@
 #include <iostream>
 #include <cmath>
 
-double getX1();
-double getX2();
-double binomialGetX();
+double triGetX1();
+double triGetX2();
+double biGetX();
 
 double a;
 double b;
@@ -22,31 +22,35 @@ int main(){
 	cin >> c;
 
 	cout << "The equation is: ";
-	cout << a << "x² + " << b << "x + " << c << endl; 
+	cout << a << "x² + " << b << "x + " << c << " = 0" << endl; 
 
-	if (a == 0){
-		cout << "X is " << binomalGetX() << endl;
-
-	//No solution
-	} else if (isnan(getX1()) || isnan(getX2())){
-		cout << "No solution" << endl;
+	//X = 0
+	if ( (a == 0 && b == 0 && c == 0) || (a == 0 && b != 0 && c == 0)){
+		cout << "X is 0" << endl;
 	
-	//Solution
+	//Binomial
+	} else if (a == 0 && b != 0 && c != 0){
+		cout << "X is " << biGetX() << endl;
+	
+	//Trinomial
+	} else if (!isnan(triGetX1()) || !isnan(triGetX2())){
+		cout << "X is either " << triGetX1() << " or "<< triGetX2() << endl;
+
+	//No solution	
 	} else {
-		cout << "X is either " << getX1() << " or "<< getX2() << endl;
+		cout << "No solution" << endl;
 	}
 
 	return 0;
 }
 
-//If a = 0
-//
-//5x + 3 = 0
-double binomialGetX(){
+//Binomial answer
+double biGetX(){
 	return -c / b;
 }
 
-double getX1(){
+//Trinomial answer 1
+double triGetX1(){
 	//Step one - simplify root
 	double root = sqrt( b*b - 4 * a * c );
 
@@ -54,7 +58,8 @@ double getX1(){
 	return (-b + root) / (2 * a);
 }
 
-double getX2(){
+//Trinomial answer 2
+double triGetX2(){
         //Step one - simplify root
         double root = sqrt( b*b - 4 * a * c );
 
