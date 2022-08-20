@@ -3,8 +3,9 @@
 
 double getX1();
 double getX2();
+double binomialGetX();
 
-double a ;
+double a;
 double b;
 double c;
 
@@ -24,7 +25,7 @@ int main(){
 	cout << a << "x² + " << b << "x + " << c << endl; 
 
 	if (a == 0){
-		cout << "a cannot be 0" << endl;
+		cout << "X is " << binomalGetX() << endl;
 
 	//No solution
 	} else if (isnan(getX1()) || isnan(getX2())){
@@ -36,6 +37,13 @@ int main(){
 	}
 
 	return 0;
+}
+
+//If a = 0
+//
+//5x + 3 = 0
+double binomialGetX(){
+	return -c / b;
 }
 
 double getX1(){
