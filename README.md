@@ -1,4 +1,4 @@
 # cpp-club-projects
-Projects for C++ Club
+Projects for C++ Club 2021-2022
 
-***2021-2022 Year Finished***
+Many thanks to Ansh for an amazing year of learning C++!
